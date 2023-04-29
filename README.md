@@ -2,6 +2,8 @@
 
 > docker 一键部署 JIRA 破解版
 
+Fork from https://github.com/lyy289065406/jira-docker
+
 ------
 
 
@@ -35,10 +37,24 @@ jira-docker
 - 宿主机安装 docker、docker-compose
   -  sudo apt install docker
   -  sudo apt install docker-compose
+  -  sudo apt install git
 - 下载仓库： `git clone https://github.com/zhuliangyu/jira-docker-7.x /usr/local/jira-docker`
 - 打开仓库目录： `cd /usr/local/jira-docker`
 - 构建镜像并运行： `docker-compose up -d`
+- Check the current IP address
+  -  ip -a 
 - 启动后，访问 [`http://localhost:8080`](http://localhost:8080) 打开 JIRA
+- Login docker as a root user
+  - docker exec -it -u 0 jira_srv /bin/bash
+- Permission issues:
+  - whoami (this will tell your exact username)
+	- id -g -n (this will tell your group name)
+  - sudo chown -R jirauser:jiragroup /path/referenced/in/the/error
+  - sudo chmod -R u=rwx,go-rwx,o-rwx /path/referenced/in/the/error
+  - jira.home directory /var/atlassian/jira
+    - sudo chown -R root:root /usr/local/jira-docker/jira/atlassian
+    - sudo chown -R daemon:daemon /var/atlassian/jira
+    - sudo chmod -R u=rwx,go-rwx,o-rwx /usr/local/jira-docker/jira/atlassian
 - 初次运行会跳转到 Setup 界面，选择 `I'll set it up myself`，然后点击 `Next`
 - 此时会要求配置数据库，选择 `My Own Database`，根据 `docker-compose.yml` 的配置填写数据库配置：
   - Database Type:  Mysql
