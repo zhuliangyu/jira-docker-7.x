@@ -6,7 +6,8 @@ COPY ./jira/crack/atlassian-extras-3.2.jar /opt/atlassian/jira/atlassian-jira/WE
 
 
 # 注入 mysql 驱动包
-COPY ./mysql/driver/mysql-connector-java-8.0.25.jar /opt/atlassian/jira/atlassian-jira/WEB-INF/lib/mysql-connector-java-8.0.25.jar
+# COPY ./mysql/driver/mysql-connector-java-8.0.25.jar /opt/atlassian/jira/atlassian-jira/WEB-INF/lib/mysql-connector-java-8.0.25.jar
+COPY ./mysql/driver/mysql-connector-java-5.1.49.jar /opt/atlassian/jira/atlassian-jira/WEB-INF/lib/mysql-connector-java-5.1.49.jar
 
 
 CMD ["/opt/atlassian/jira/bin/catalina.sh", "run"]
