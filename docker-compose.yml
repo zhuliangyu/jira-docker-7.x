@@ -4,7 +4,7 @@ services:
     image: mysql:5.7
     container_name: jira_db
     environment:
-      - TZ=Asia/Shanghai
+      - TZ=America/Vancouver
       - MYSQL_LOG_CONSOLE=true
       - MYSQL_ROOT_PASSWORD=123456
       - MYSQL_DATABASE=jira
@@ -31,12 +31,13 @@ services:
       context: .
       dockerfile: Dockerfile
     environment:
-      - TZ=Asia/Shanghai
+      - TZ=America/Vancouver
 #      - JVM_MINIMUM_MEMORY=1g
 #      - JVM_MAXIMUM_MEMORY=12g
 #      - JVM_CODE_CACHE_ARGS='-XX:InitialCodeCacheSize=1g -XX:ReservedCodeCacheSize=8g'
     volumes:
       - ./jira/conf/server.xml:/opt/atlassian/jira/conf/server.xml
+      #  jira.home directory /var/atlassian/jira
       - ./jira/atlassian:/var/atlassian/jira
     ports:
       - "8080:8080"
