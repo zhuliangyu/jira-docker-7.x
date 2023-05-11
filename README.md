@@ -1,3 +1,43 @@
+https://github.com/hecxcloud/jira-docker-deploy
+
+sudo apt-get update
+sudo apt-get upgrade
+
+sudo apt install openssh-server
+sudo systemctl enable ssh
+sudo ufw allow ssh
+
+ip a
+sudo apt install git
+
+sudo apt install docker
+sudo apt install docker-compose
+
+DB setup
+创建数据库
+CREATE DATABASE <database-name> CHARACTER SET utf8mb4 COLLATE utf8mb4_bin;
+创建用户
+CREATE user '<confluenceuser>'@'localhost' IDENTIFIED BY '<password>';
+授权
+GRANT ALL PRIVILEGES ON <database-name>.* TO '<confluenceuser>'@'localhost' WITH GRANT OPTION;
+
+git clone https://github.com/hecxcloud/jira-docker-deploy.git /usr/local/jira-docker-deploy
+
+cd /usr/local/jira-docker-deploy
+
+sudo docker-compose up -d
+
+破解命令
+-d: 数据中心许可证
+-m: 邮箱
+-n: 许可证名字
+-p: 破解的项目名--jira
+-o: 许可组织，填写你的 http 请求地址即可
+-s: 服务器 ID
+docker exec jira bash -c "java -jar /op/atlassian-agent.jar -d -m test@test.com -n test -p jira -o http://10.0.0.98:8080/ -s BWKD-Z8L2-9CCS-C962"
+
+
+
 # JIRA-Docker
 
 > docker 一键部署 JIRA 破解版
@@ -34,21 +74,21 @@ jira-docker
 
 ## 部署步骤
 
-- 宿主机安装 docker、docker-compose
+- 宿主机 (Ubuntu 22) 安装 docker、docker-compose
   -  sudo apt install docker
   -  sudo apt install docker-compose
   -  sudo apt install git
 - 下载仓库： `git clone https://github.com/zhuliangyu/jira-docker-7.x /usr/local/jira-docker`
 - 打开仓库目录： `cd /usr/local/jira-docker`
-- 构建镜像并运行： `docker-compose up -d`
+- 构建镜像并运行： `sudo docker-compose up -d`
 - Check the current IP address
-  -  ip -a 
+  -  `ip -a` 
 - 启动后，访问 [`http://localhost:8080`](http://localhost:8080) 打开 JIRA
-- Login docker as a root user
-  - docker exec -it -u 0 jira_srv /bin/bash
+- Login the JIRA docker container as the root user
+  - `docker exec -it -u 0 jira_srv /bin/bash`
 - Permission issues:
-  - whoami (this will tell your exact username)
-	- id -g -n (this will tell your group name)
+  - `whoami` (this will tell your exact username)
+	- `id -g -n` (this will tell your group name)
   - sudo chown -R jirauser:jiragroup /path/referenced/in/the/error
   - sudo chmod -R u=rwx,go-rwx,o-rwx /path/referenced/in/the/error
   - jira.home directory /var/atlassian/jira
